@@ -2,15 +2,15 @@ const track = require('../model/app');
 
 const createTrack = async (req, res) => {
   const trackDoc = new track({
-    slack_name,
-    track,
-    github_file_url,
-    github_repo_url,
+    ...req.body,
   });
 
   try {
     await trackDoc.save();
-    console.log(trackDoc);
+    return res.json({
+      msg: 'Success',
+      trackDoc,
+    });
   } catch (error) {
     console.log(error);
   }
