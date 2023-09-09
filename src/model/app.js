@@ -36,20 +36,6 @@ trackSchema.virtual('current_day').get(function () {
 // Pre-save hook to set UTC time
 trackSchema.virtual('utc_time').get(function () {
   const currentUtcTime = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
-
-  //Check if the difference between the current time and save time is within +/- secs
-  // if (this.date) {
-  //   const savedTime = new Date(this.date).getTime();
-  //   const currentTime = new Date().getTime();
-  //   const timeDifference = Math.abs(savedTime - currentTime);
-
-  //   if (timeDifference > 2000) {
-  //     return next(
-  //       new Error('Timestamp is not withing +/- 2 minutes of current time')
-  //     );
-  //   }
-  // }
-
   return currentUtcTime;
 });
 trackSchema.virtual('status_code').get(function () {
