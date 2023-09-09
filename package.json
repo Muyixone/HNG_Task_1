@@ -9,7 +9,7 @@
   "main": "app.js",
   "devDependencies": {},
   "scripts": {
-    "startdev": "node app.js"
+    "startdev": "node index.js"
   },
   "keywords": [],
   "author": "",
