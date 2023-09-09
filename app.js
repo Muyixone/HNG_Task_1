@@ -2,28 +2,21 @@ const express = require('express');
 
 require('dotenv').config();
 
-const connectDb = require('./Db/db');
-const createTrack = require('./src/routes/app');
+// const createTrack = require('./src/routes/app');
 const getTrackRoute = require('./src/routes/get_route');
 const app = express();
-const PORT = process.env.PORT;
 
 // Middlewares
 app.use(express.json());
 
-app.use('/hng/task1/api', getTrackRoute);
-app.use('/hng/task1/api', createTrack);
+// // error handler
+// app.use(function (err, req, res, next) {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-// Connect to DB and server
-const start = async () => {
-  try {
-    await connectDb(process.env.MONGODB_URI);
-    app.listen(PORT, () => {
-      console.log(`DB connected, Server listening on ${PORT}`);
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+//   // render the error page
+//   res.status(err.status || 500).json({ error: err.message });
+// });
 
-start();
+module.exports = app;
