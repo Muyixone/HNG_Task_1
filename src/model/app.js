@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema();
+const { Schema } = mongoose;
 
-const trackSchema = new Schema(
+const trackSchema = Schema(
   {
     slack_name: {
       type: String,
       required: true,
     },
-    utc_time: Date,
     track: String,
     github_file_url: String,
     github_repo_url: String,
@@ -35,25 +34,26 @@ trackSchema.virtual('current_day').get(function () {
 });
 
 // Pre-save hook to set UTC time
-trackSchema.pre('save', function (next) {
+trackSchema.virtual('utc_time').get(function () {
   const currentUtcTime = new Date().toISOString();
 
   //Check if the difference between the current time and save time is within +/- secs
-  if (this.utc_time) {
-    const savedTime = new Date(this.utc_time).getTime();
-    const currentTime = new Date().getTime();
-    const timeDifference = Math.abs(savedTime - currentTime);
+  // if (this.date) {
+  //   const savedTime = new Date(this.date).getTime();
+  //   const currentTime = new Date().getTime();
+  //   const timeDifference = Math.abs(savedTime - currentTime);
 
-    if (timeDifference > 2000) {
-      return next(
-        new Error('Timestamp is not withing +/- 2 seconds of current time')
-      );
-    }
-  }
+  //   if (timeDifference > 2000) {
+  //     return next(
+  //       new Error('Timestamp is not withing +/- 2 minutes of current time')
+  //     );
+  //   }
+  // }
 
-  this.utc_time = currentUtcTime;
-
-  next();
+  return currentUtcTime;
+});
+trackSchema.virtual('status_code').get(function () {
+  return 200;
 });
 
 module.exports = mongoose.model('Track', trackSchema);
