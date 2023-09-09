@@ -35,7 +35,7 @@ trackSchema.virtual('current_day').get(function () {
 
 // Pre-save hook to set UTC time
 trackSchema.virtual('utc_time').get(function () {
-  const currentUtcTime = new Date().toISOString();
+  const currentUtcTime = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
 
   //Check if the difference between the current time and save time is within +/- secs
   // if (this.date) {
