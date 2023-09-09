@@ -11,10 +11,9 @@ const getTrack = async (req, res) => {
     if (track) {
       queryObject.track = { $regex: track, $options: 'i' };
     }
+    let result = await trackSchema.findOne(queryObject).select('-_id -__v');
 
-    let result = await trackSchema.findOne(queryObject).select('-_id -id');
-
-    console.log({ result });
+    res.json(result);
   } catch (error) {
     console.log(error);
   }
